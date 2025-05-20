@@ -363,9 +363,9 @@ class EditorWindow:
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
         if self.allow_explanation:
-            self.explanation = self.LLM_explanation(self)
+            self.llm = self.LLM_explanation(self)
             text.bind("<<toggle-code-explain>>",
-                      self.explanation.toggle_code_explain_event())
+                      self.llm.toggle_code_explain_event)
         else:
             self.update_menu_state('options', '*ode*planation', 'disabled')
 
