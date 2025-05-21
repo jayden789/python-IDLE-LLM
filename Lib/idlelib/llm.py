@@ -55,7 +55,14 @@ class LLM_explanation:
                     
             response = self.api_client.send_request(message, request_type)
             if response:
-                print("Response from LLM API:", response)
+                explanation = f"\n# --- LLM Explanation ---\n# {response.replace(chr(10), chr(10) + '# ')}\n"
+                if hasattr(self.editwin, 'show_explanation_panel'):
+                    self.editwin.show_explanation_panel()
+                panel = self.editwin.explanation_panel
+                panel.config(state='normal')
+                panel.delete('1.0', 'end')
+                panel.insert('1.0', explanation)
+                panel.config(state='disabled')
                 
         except Exception as e:
             print("Error in code explanation feature:", e)
