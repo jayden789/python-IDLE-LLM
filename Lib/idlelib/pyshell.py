@@ -867,6 +867,12 @@ class PyShell(OutputWindow):
     rmenu_specs.insert(_idx, ("Copy with prompts",
                               "<<copy-with-prompts>>",
                               "rmenu_check_copy"))
+    _idx = 1 + len(list(itertools.takewhile(
+        lambda rmenu_item: rmenu_item[0] != "Squeeze", rmenu_specs)
+    ))
+    rmenu_specs.insert(_idx, ("Code Explanation",
+                              "<<toggle-code-explain>>",
+                              None))
     del _idx
 
     allow_line_numbers = False

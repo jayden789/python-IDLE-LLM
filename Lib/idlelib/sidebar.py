@@ -449,6 +449,9 @@ class ShellSidebar(BaseSideBar):
         rmenu.add_command(label='Copy with prompts',
                           command=mkcmd('<<copy-with-prompts>>'),
                           state='normal' if has_selection else 'disabled')
+        rmenu.add_command(label='Code Explanation',
+                          command=mkcmd('<<toggle-code-explanation>>'),
+                          state='normal')
         rmenu.tk_popup(event.x_root, event.y_root)
         return "break"
 
