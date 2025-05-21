@@ -150,7 +150,8 @@ class PyShellEditorWindow(EditorWindow):
         ("Paste", "<<paste>>", "rmenu_check_paste"),
         (None, None, None),
         ("Set Breakpoint", "<<set-breakpoint>>", None),
-        ("Clear Breakpoint", "<<clear-breakpoint>>", None)
+        ("Clear Breakpoint", "<<clear-breakpoint>>", None),
+        ("Code Explanation", "<<toggle-code-explain>>", None)
     ]
 
     def color_breakpoint_text(self, color=True):
