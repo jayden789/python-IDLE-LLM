@@ -63,13 +63,14 @@ class EditorWindow:
     from idlelib.format import FormatParagraph, FormatRegion, Indents, Rstrip
     from idlelib.parenmatch import ParenMatch
     from idlelib.zoomheight import ZoomHeight
-
+    from idlelib.llm import LLM_explanation
     filesystemencoding = sys.getfilesystemencoding()  # for file names
     help_url = None
 
     allow_code_context = True
     allow_line_numbers = True
     user_input_insert_tags = None
+    allow_explanation = True
 
     def __init__(self, flist=None, filename=None, key=None, root=None):
         # Delay import: runscript imports pyshell imports EditorWindow.
@@ -361,6 +362,12 @@ class EditorWindow:
             text.bind("<<toggle-line-numbers>>", self.toggle_line_numbers_event)
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
+        if self.allow_explanation:
+            self.llm = self.LLM_explanation(self)
+            text.bind("<<toggle-code-explain>>",
+                      self.llm.toggle_code_explain_event)
+        else:
+            self.update_menu_state('options', '*ode*planation', 'disabled')
 
     def handle_winconfig(self, event=None):
         self.set_width()

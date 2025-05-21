@@ -871,7 +871,7 @@ class PyShell(OutputWindow):
 
     allow_line_numbers = False
     user_input_insert_tags = "stdin"
-
+    
     # New classes
     from idlelib.history import History
     from idlelib.sidebar import ShellSidebar
