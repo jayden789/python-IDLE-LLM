@@ -232,7 +232,6 @@ class EditorWindow:
         text.grid(row=1, column=1, sticky=NSEW)
         text.focus_set()
         self.set_width()
-
         # usetabs true  -> literal tab characters are used by indent and
         #                  dedent cmds, possibly mixed with spaces if
         #                  indentwidth is not a multiple of tabwidth,

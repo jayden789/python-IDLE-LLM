@@ -250,7 +250,7 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Option-Key-x>
 zoom-height= <Option-Key-0>
-toggle-code-explain = <Option-Key-c>
+toggle-code-explain = <Command-Control-Key-e>
 
 [IDLE Classic OSX]
 toggle-tabs = <Control-Key-t>
@@ -312,5 +312,5 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Option-Key-x>
 zoom-height= <Option-Key-0>
-toggle-code-explain = <Option-Key-c>
+toggle-code-explain = <Command-Control-Key-e>
 
