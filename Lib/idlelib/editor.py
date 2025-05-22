@@ -208,7 +208,9 @@ class EditorWindow:
         text.bind("<<del-word-left>>", self.del_word_left)
         text.bind("<<del-word-right>>", self.del_word_right)
         text.bind("<<beginning-of-line>>", self.home_callback)
-
+        self.llm = self.LLM_explanation(self)
+        text.bind("<<toggle-code-explain>>",
+                      self.llm.toggle_code_explain_event)
         if flist:
             flist.inversedict[self] = key
             if key:
@@ -230,7 +232,6 @@ class EditorWindow:
         text.grid(row=1, column=1, sticky=NSEW)
         text.focus_set()
         self.set_width()
-
         # usetabs true  -> literal tab characters are used by indent and
         #                  dedent cmds, possibly mixed with spaces if
         #                  indentwidth is not a multiple of tabwidth,
@@ -362,12 +363,6 @@ class EditorWindow:
             text.bind("<<toggle-line-numbers>>", self.toggle_line_numbers_event)
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
-        if self.allow_explanation:
-            self.llm = self.LLM_explanation(self)
-            text.bind("<<toggle-code-explain>>",
-                      self.llm.toggle_code_explain_event)
-        else:
-            self.update_menu_state('options', '*ode*planation', 'disabled')
 
     def handle_winconfig(self, event=None):
         self.set_width()
