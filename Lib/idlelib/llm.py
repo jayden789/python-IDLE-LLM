@@ -11,4 +11,4 @@ class LLM_explanation:
         """
         Toggle the explanation mode on or off.
         """
-        selection = self.text.get("sel.first", "sel.last")
+        print("Toggling explanation mode")

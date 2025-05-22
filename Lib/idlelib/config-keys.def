@@ -66,6 +66,7 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Alt-Key-x>
 zoom-height= <Alt-Key-2>
+toggle-code-explain = <Alt-Key-c>
 
 [IDLE Classic Unix]
 copy=<Alt-Key-w> <Meta-Key-w>
@@ -126,6 +127,8 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Alt-Key-x>
 zoom-height= <Alt-Key-2>
+toggle-code-explain = <Alt-Key-c>
+
 
 [IDLE Modern Unix]
 copy = <Control-Shift-Key-C> <Control-Key-Insert>
@@ -186,6 +189,7 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Alt-Key-x>
 zoom-height= <Alt-Key-2>
+toggle-code-explain = <Alt-Key-c>
 
 [IDLE Classic Mac]
 copy=<Command-Key-c>
@@ -246,6 +250,7 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Option-Key-x>
 zoom-height= <Option-Key-0>
+toggle-code-explain = <Command-Key-c>
 
 [IDLE Classic OSX]
 toggle-tabs = <Control-Key-t>
@@ -307,3 +312,5 @@ run-module= <Key-F5>
 run-custom= <Shift-Key-F5>
 check-module= <Option-Key-x>
 zoom-height= <Option-Key-0>
+toggle-code-explain = <Command-Key-c>
+
