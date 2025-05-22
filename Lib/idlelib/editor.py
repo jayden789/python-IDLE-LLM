@@ -63,13 +63,14 @@ class EditorWindow:
     from idlelib.format import FormatParagraph, FormatRegion, Indents, Rstrip
     from idlelib.parenmatch import ParenMatch
     from idlelib.zoomheight import ZoomHeight
-
+    from idlelib.llm import LLM_explanation
     filesystemencoding = sys.getfilesystemencoding()  # for file names
     help_url = None
 
     allow_code_context = True
     allow_line_numbers = True
     user_input_insert_tags = None
+    allow_explanation = True
 
     def __init__(self, flist=None, filename=None, key=None, root=None):
         # Delay import: runscript imports pyshell imports EditorWindow.
@@ -207,7 +208,9 @@ class EditorWindow:
         text.bind("<<del-word-left>>", self.del_word_left)
         text.bind("<<del-word-right>>", self.del_word_right)
         text.bind("<<beginning-of-line>>", self.home_callback)
-
+        self.llm = self.LLM_explanation(self)
+        text.bind("<<toggle-code-explain>>",
+                      self.llm.toggle_code_explain_event)
         if flist:
             flist.inversedict[self] = key
             if key:
@@ -229,7 +232,6 @@ class EditorWindow:
         text.grid(row=1, column=1, sticky=NSEW)
         text.focus_set()
         self.set_width()
-
         # usetabs true  -> literal tab characters are used by indent and
         #                  dedent cmds, possibly mixed with spaces if
         #                  indentwidth is not a multiple of tabwidth,
