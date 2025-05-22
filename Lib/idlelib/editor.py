@@ -208,7 +208,9 @@ class EditorWindow:
         text.bind("<<del-word-left>>", self.del_word_left)
         text.bind("<<del-word-right>>", self.del_word_right)
         text.bind("<<beginning-of-line>>", self.home_callback)
-
+        self.llm = self.LLM_explanation(self)
+        text.bind("<<toggle-code-explain>>",
+                      self.llm.toggle_code_explain_event)
         if flist:
             flist.inversedict[self] = key
             if key:
@@ -218,6 +220,9 @@ class EditorWindow:
             text.bind("<<open-class-browser>>", self.open_module_browser)
             text.bind("<<open-path-browser>>", self.open_path_browser)
             text.bind("<<open-turtle-demo>>", self.open_turtle_demo)
+            # self.llm = self.LLM_explanation(self)
+            # text.bind("<<toggle-code-explain>>",
+            #           self.llm.toggle_code_explain_event)
 
         self.set_status_bar()
         text_frame.pack(side=LEFT, fill=BOTH, expand=1)
@@ -362,12 +367,12 @@ class EditorWindow:
             text.bind("<<toggle-line-numbers>>", self.toggle_line_numbers_event)
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
-        if self.allow_explanation:
-            self.llm = self.LLM_explanation(self)
-            text.bind("<<toggle-code-explain>>",
-                      self.llm.toggle_code_explain_event)
-        else:
-            self.update_menu_state('options', '*ode*planation', 'disabled')
+        # if self.allow_explanation:
+        #     self.llm = self.LLM_explanation(self)
+        #     text.bind("<<toggle-code-explain>>",
+        #               self.llm.toggle_code_explain_event)
+        # else:
+        #     self.update_menu_state('options', '*ode*planation', 'disabled')
 
     def handle_winconfig(self, event=None):
         self.set_width()
