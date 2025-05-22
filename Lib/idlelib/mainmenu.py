@@ -102,7 +102,7 @@ menudefs = [
    None,
    ('Show _Code Context', '<<toggle-code-context>>'),
    ('Show _Line Numbers', '<<toggle-line-numbers>>'),
-   ('Code _Explanation', '<<toggle-code-explain>>'),
+   ('_Code Explanation', '<<toggle-code-explain>>'),
    ('_Zoom Height', '<<zoom-height>>'),
    ]),
  

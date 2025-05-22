@@ -210,7 +210,9 @@ class EditorWindow:
         text.bind("<<del-word-left>>", self.del_word_left)
         text.bind("<<del-word-right>>", self.del_word_right)
         text.bind("<<beginning-of-line>>", self.home_callback)
-
+        self.llm = self.LLM_explanation(self)
+        text.bind("<<toggle-code-explain>>",
+                      self.llm.toggle_code_explain_event)
         if flist:
             flist.inversedict[self] = key
             if key:
@@ -367,12 +369,6 @@ class EditorWindow:
             text.bind("<<toggle-line-numbers>>", self.toggle_line_numbers_event)
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
-        if self.allow_explanation:
-            self.llm = self.LLM_explanation(self)
-            text.bind("<<toggle-code-explain>>",
-                      self.llm.toggle_code_explain_event)
-        else:
-            self.update_menu_state('options', '*ode*planation', 'disabled')
 
     def show_explanation_panel(self):
         if hasattr(self, 'explanation_panel'):
