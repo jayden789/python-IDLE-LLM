@@ -234,7 +234,7 @@ class EditorWindow:
         self.set_width()
 
         # Explanation panel
-        self.explanation_panel = tkinter.Text(self.top, width=40, state='disabled')
+        self.explanation_panel = tkinter.Text(self.top, width=70, state='disabled')
 
         # usetabs true  -> literal tab characters are used by indent and
         #                  dedent cmds, possibly mixed with spaces if

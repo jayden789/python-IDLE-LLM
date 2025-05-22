@@ -54,8 +54,12 @@ class LLM_explanation:
                     return
                     
             response = self.api_client.send_request(message, request_type)
+
+            '''
+                Put the response in a second screen 
+            '''
             if response:
-                explanation = f"\n# --- LLM Explanation ---\n# {response.replace(chr(10), chr(10) + '# ')}\n"
+                explanation = f"{response}\n"
                 if hasattr(self.editwin, 'show_explanation_panel'):
                     self.editwin.show_explanation_panel()
                 panel = self.editwin.explanation_panel
