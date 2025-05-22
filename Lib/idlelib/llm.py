@@ -65,12 +65,45 @@ class LLM_explanation:
                 panel = self.editwin.explanation_panel
                 panel.config(state='normal')
                 panel.delete('1.0', 'end')
-                panel.insert('1.0', explanation)
+                self.insert_markdown(panel, explanation)
                 panel.config(state='disabled')
                 
         except Exception as e:
             print("Error in code explanation feature:", e)
             messagebox.showerror("Error", f"Could not process explanation: {str(e)}")
+            
+    def insert_markdown(self, text_widget, content):
+        text_widget.tag_configure("bold", font=("TkDefaultFont", 10, "bold"))
+        text_widget.tag_configure("header", font=("TkDefaultFont", 11, "bold"))
+        text_widget.tag_configure("bullet", lmargin1=20, lmargin2=30)
+        text_widget.tag_configure("code", font=("Courier", 10), background="#8c5aff")
+
+        lines = content.splitlines()
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            if re.match(r"^[A-Z][A-Z\s]+:$", stripped) or stripped.endswith(":"):
+                text_widget.insert("end", line + "\n", "header")
+            elif re.match(r"^(\*|•)\s+", stripped):
+                bullet_line = "• " + stripped[2:] + "\n"
+                text_widget.insert("end", bullet_line, "bullet")
+            elif "**" in line:
+                parts = re.split(r"(\*\*.*?\*\*)", line)
+                for part in parts:
+                    if part.startswith("**") and part.endswith("**"):
+                        text_widget.insert("end", part[2:-2], "bold")
+                    else:
+                        text_widget.insert("end", part)
+                text_widget.insert("end", "\n")
+            elif re.search(r"`[^`]+`", line):
+                parts = re.split(r"(`[^`]+`)", line)
+                for part in parts:
+                    if part.startswith("`") and part.endswith("`"):
+                        text_widget.insert("end", part[1:-1], "code")
+                    else:
+                        text_widget.insert("end", part)
+                text_widget.insert("end", "\n")
+            else:
+                text_widget.insert("end", line + "\n")
 
     def extract_last_error(self):
         text = self.text.get("1.0", "end")
