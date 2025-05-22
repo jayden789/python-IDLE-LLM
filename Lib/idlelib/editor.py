@@ -5,6 +5,7 @@ import platform
 import re
 import string
 import sys
+import tkinter
 import tokenize
 import traceback
 import webbrowser
@@ -64,6 +65,7 @@ class EditorWindow:
     from idlelib.parenmatch import ParenMatch
     from idlelib.zoomheight import ZoomHeight
     from idlelib.llm import LLM_explanation
+
     filesystemencoding = sys.getfilesystemencoding()  # for file names
     help_url = None
 
@@ -232,6 +234,10 @@ class EditorWindow:
         text.grid(row=1, column=1, sticky=NSEW)
         text.focus_set()
         self.set_width()
+
+        # Explanation panel
+        self.explanation_panel = tkinter.Text(self.top, width=70, state='disabled')
+
         # usetabs true  -> literal tab characters are used by indent and
         #                  dedent cmds, possibly mixed with spaces if
         #                  indentwidth is not a multiple of tabwidth,
@@ -364,6 +370,10 @@ class EditorWindow:
         else:
             self.update_menu_state('options', '*ine*umbers', 'disabled')
 
+    def show_explanation_panel(self):
+        if hasattr(self, 'explanation_panel'):
+            self.explanation_panel.pack(side='right', fill='y')
+    
     def handle_winconfig(self, event=None):
         self.set_width()
 
