@@ -1,7 +1,11 @@
 import re
+import io
+import sys
 import tkinter.messagebox as messagebox
 from tkinter import INSERT
 from idlelib.llm_api import LLMApiClient
+from pyflakes.api import check
+from pyflakes.reporter import Reporter
 
 URL = "https://backend-190.onrender.com/explain"
 
@@ -11,6 +15,8 @@ class LLM_explanation:
         self.text = editwin.text
         self.explanation_mode = False
         self.api_client = LLMApiClient(URL)
+        self.text.bind("<KeyRelease>", lambda e: self.check_and_underline_errors())
+
         
     def toggle_code_explain_event(self, event=None):
         try:
@@ -55,9 +61,7 @@ class LLM_explanation:
                     
             response = self.api_client.send_request(message, request_type)
 
-            '''
-                Put the response in a second screen 
-            '''
+
             if response:
                 explanation = f"{response}\n"
                 if hasattr(self.editwin, 'show_explanation_panel'):
@@ -145,3 +149,53 @@ class LLM_explanation:
                     return text[context_start:context_end].strip()
         
         return None
+
+    def check_and_underline_errors(self):
+        self.text.tag_remove("error_underline", "1.0", "end")
+        is_shell = hasattr(self.editwin, 'interp')
+        error_lines = set()
+        if not is_shell:
+            content = self.text.get("1.0", "end-1c")
+            line_offset = 1
+            # --- Bracket/quote error detection ---
+            stack = []
+            pairs = {'(': ')', '[': ']', '{': '}'}
+            openers = pairs.keys()
+            closers = pairs.values()
+            for i, char in enumerate(content):
+                if char in openers:
+                    stack.append((char, i))
+                elif char in closers:
+                    if stack and pairs[stack[-1][0]] == char:
+                        stack.pop()
+                    else:
+                        idx = i
+                        line = content.count('\n', 0, idx) + line_offset
+                        error_lines.add(line)
+            if stack:
+                _, idx = stack[-1]
+                line = content.count('\n', 0, idx) + line_offset
+                error_lines.add(line)
+            single_quotes = content.count("'")
+            double_quotes = content.count('"')
+            if single_quotes % 2 != 0 or double_quotes % 2 != 0:
+                last_quote = max(content.rfind("'"), content.rfind('"'))
+                line = content.count('\n', 0, last_quote) + line_offset
+                error_lines.add(line)
+
+            code = content
+            output = io.StringIO()
+            reporter = Reporter(output, output)
+            check(code, "<input>", reporter=reporter)
+            output.seek(0)
+            for line in output:
+                match = re.match(r"<input>:(\d+):", line)
+                if match:
+                    error_lines.add(int(match.group(1)))
+        # Underline all error lines
+        for line_number in error_lines:
+            self.text.tag_add("error_underline", f"{line_number}.0", f"{line_number}.end")
+        if error_lines:
+            self.text.tag_configure("error_underline", underline=True, foreground="red")
+        else:
+            self.text.tag_remove("error_underline", "1.0", "end")
