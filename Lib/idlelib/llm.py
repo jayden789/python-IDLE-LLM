@@ -16,6 +16,7 @@ class LLM_explanation:
         self.explanation_mode = False
         self.api_client = LLMApiClient(URL)
         self.text.bind("<KeyRelease>", lambda e: self.check_and_underline_errors())
+
         
     def toggle_code_explain_event(self, event=None):
         try:
@@ -60,9 +61,7 @@ class LLM_explanation:
                     
             response = self.api_client.send_request(message, request_type)
 
-            '''
-                Put the response in a second screen 
-            '''
+
             if response:
                 explanation = f"{response}\n"
                 if hasattr(self.editwin, 'show_explanation_panel'):
@@ -183,7 +182,7 @@ class LLM_explanation:
                 last_quote = max(content.rfind("'"), content.rfind('"'))
                 line = content.count('\n', 0, last_quote) + line_offset
                 error_lines.add(line)
-            # --- Linter-based error detection (pyflakes) ---
+
             code = content
             output = io.StringIO()
             reporter = Reporter(output, output)
