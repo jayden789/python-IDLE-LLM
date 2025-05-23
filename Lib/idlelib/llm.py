@@ -150,12 +150,6 @@ class LLM_explanation:
                     return text[context_start:context_end].strip()
         
         return None
-    
-    def underline_error(self, line_number):
-        # Underline the whole line in red
-        self.text.tag_configure("error_underline", underline=True, foreground="red")
-        self.text.tag_remove("error_underline", "1.0", "end")
-        self.text.tag_add("error_underline", f"{line_number}.0", f"{line_number}.end")
 
     def check_and_underline_errors(self):
         self.text.tag_remove("error_underline", "1.0", "end")
