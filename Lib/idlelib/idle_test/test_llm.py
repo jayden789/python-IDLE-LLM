@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import Mock, patch
 from idlelib.llm import LLM_explanation
 
-class DummyText:
+class LLMText:
     def __init__(self):
         self.content = "print('hello')\n"
         self.tags = {}
@@ -36,14 +36,14 @@ class DummyText:
     def tag_configure(self, tag, **kwargs):
         self.tag_configure_calls.append((tag, kwargs))
 
-class DummyEditwin:
+class LLMEditwin:
     def __init__(self):
-        self.text = DummyText()
-        self.explanation_panel = DummyText()
+        self.text = LLMText()
+        self.explanation_panel = LLMText()
         self.show_explanation_panel = Mock()
         self.interp = None  # Simulate shell if needed
 
-class DummyApiClient:
+class LLMApiClient:
     def __init__(self, url):
         self.url = url
         self.last_message = None
@@ -56,9 +56,9 @@ class DummyApiClient:
 
 class LLMExplanationTest(unittest.TestCase):
 
-    @patch("idlelib.llm.LLMApiClient", new=DummyApiClient)
+    @patch("idlelib.llm.LLMApiClient", new=LLMApiClient)
     def setUp(self):
-        self.editwin = DummyEditwin()
+        self.editwin = LLMEditwin()
         self.llm = LLM_explanation(self.editwin)
 
     def test_toggle_code_explain_event_with_selection(self):
@@ -74,7 +74,7 @@ class LLMExplanationTest(unittest.TestCase):
     #     self.assertIn("Explanation result", self.editwin.explanation_panel.insert_calls[0][1])
 
     def test_insert_markdown(self):
-        panel = DummyText()
+        panel = LLMText()
         self.llm.insert_markdown(panel, "**bold**\nHeader:\n• bullet\n`code`")
         inserted = "".join(call[1] for call in panel.insert_calls)
         self.assertIn("bold", inserted)
