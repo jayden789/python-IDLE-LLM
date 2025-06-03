@@ -15,7 +15,6 @@ class LLM_explanation:
         self.text = editwin.text
         self.explanation_mode = False
         self.api_client = LLMApiClient(URL)
-        self.text.bind("<KeyRelease>", lambda e: self.check_and_underline_errors())
 
         
     def toggle_code_explain_event(self, event=None):
