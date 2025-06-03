@@ -67,11 +67,6 @@ class LLMExplanationTest(unittest.TestCase):
         self.assertEqual(self.llm.api_client.last_type, "explain_code")
         self.assertIn("Explanation result", self.editwin.explanation_panel.insert_calls[0][1])
 
-    # def test_toggle_code_explain_event_without_selection(self):
-    #     self.editwin.text.tags["sel"] = (1, 2)
-    #     self.llm.toggle_code_explain_event()
-    #     self.assertEqual(self.llm.api_client.last_type, "summarize_file")
-    #     self.assertIn("Explanation result", self.editwin.explanation_panel.insert_calls[0][1])
 
     def test_insert_markdown(self):
         panel = LLMText()
