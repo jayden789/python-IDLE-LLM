@@ -86,7 +86,7 @@ class LLMExplanationTest(unittest.TestCase):
         self.assertIsNone(self.llm.extract_last_error())
 
     def test_extract_last_error_traceback(self):
-        # Simulate a traceback as would appear in the shell
+
         self.editwin.text.content = (
             ">>> 1/0\n"
             "Traceback (most recent call last):\n"
