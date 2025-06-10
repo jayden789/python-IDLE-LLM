@@ -1,6 +1,6 @@
 import tkinter as tk
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from idlelib.llm import LLM_explanation
 
 class LLMText:
@@ -67,6 +67,27 @@ class LLMExplanationTest(unittest.TestCase):
         self.assertEqual(self.llm.api_client.last_type, "explain_code")
         self.assertIn("Explanation result", self.editwin.explanation_panel.insert_calls[0][1])
 
+    def test_toggle_code_explain_event_without_selection(self):
+        # Create a mock Text widget
+        mock_text = MagicMock()
+        mock_text.tag_ranges.return_value = ()
+        mock_text.get.return_value = ""  # No content / no error
+
+        # Set up mock editwin with interp (to simulate PyShell) and mocked text
+        self.editwin.text = mock_text
+        self.editwin.interp = True
+
+        with patch("idlelib.llm.messagebox.showinfo") as mock_showinfo:
+            self.llm.toggle_code_explain_event()
+
+            mock_showinfo.assert_called_once_with(
+                "Explanation",
+                "Please select code to explain or position cursor on an error message."
+            )
+
+        # Check that no API call was made
+        self.assertIsNone(self.llm.api_client.last_type)
+
 
     def test_insert_markdown(self):
         panel = LLMText()
@@ -86,7 +107,7 @@ class LLMExplanationTest(unittest.TestCase):
         self.assertIsNone(self.llm.extract_last_error())
 
     def test_extract_last_error_traceback(self):
-
+        # Simulate a traceback as would appear in the shell
         self.editwin.text.content = (
             ">>> 1/0\n"
             "Traceback (most recent call last):\n"
