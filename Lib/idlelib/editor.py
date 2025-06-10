@@ -213,6 +213,7 @@ class EditorWindow:
         self.llm = self.LLM_explanation(self)
         text.bind("<<toggle-code-explain>>",
                       self.llm.toggle_code_explain_event)
+        text.bind("<KeyRelease>", lambda e: self.llm.check_and_underline_errors())
         if flist:
             flist.inversedict[self] = key
             if key:
