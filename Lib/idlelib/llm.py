@@ -7,7 +7,7 @@ from idlelib.llm_api import LLMApiClient
 from pyflakes.api import check
 from pyflakes.reporter import Reporter
 
-URL = "https://backend-190.onrender.com/explain"
+URL = "https://backend-190-lz7w.onrender.com/explain"
 
 class LLM_explanation:
     def __init__(self, editwin):
