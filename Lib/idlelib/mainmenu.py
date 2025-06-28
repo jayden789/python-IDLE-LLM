@@ -105,7 +105,7 @@ menudefs = [
    ('_Code Explanation', '<<toggle-code-explain>>'),
    ('_Zoom Height', '<<zoom-height>>'),
    ]),
- 
+
 
  ('window', [
    ]),

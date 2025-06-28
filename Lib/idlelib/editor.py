@@ -374,7 +374,7 @@ class EditorWindow:
     def show_explanation_panel(self):
         if hasattr(self, 'explanation_panel'):
             self.explanation_panel.pack(side='right', fill='y')
-    
+
     def handle_winconfig(self, event=None):
         self.set_width()
 

@@ -118,8 +118,8 @@ class LLMExplanationTest(unittest.TestCase):
         result = self.llm.extract_last_error()
         self.assertIn("Traceback (most recent call last):", result)
         self.assertIn("ZeroDivisionError", result)
-        
-        
+
+
 class LLMExplanationGUITest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
