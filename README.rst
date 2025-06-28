@@ -161,6 +161,27 @@ For information about building Python's documentation, refer to `Doc/README.rst
 <https://github.com/python/cpython/blob/main/Doc/README.rst>`_.
 
 
+Developer Setup
+---------------
+
+To set up your development environment and ensure code quality checks pass:
+
+1. **Install dependencies** (preferably in a virtual environment):
+
+   .. code-block:: bash
+
+        ./python.exe -m pip install -r requirements.txt
+
+2. **Run pre-commit hooks** to automatically fix formatting and lint errors before pushing:
+
+   .. code-block:: bash
+
+        ./python.exe -m pre-commit run --all-files
+
+   This will apply all configured code quality checks and auto-fix issues such as trailing whitespace and end-of-file errors. Review and commit any changes made by pre-commit before pushing.
+
+
+
 Testing
 -------
 
